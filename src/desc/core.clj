@@ -11,13 +11,14 @@
    (let [recs (fetch-records)
          new-recs (conj recs {:name item :desc desc})
          body (with-out-str (clojure.pprint/pprint new-recs))]
-     (spit (str (db-file)) body))
+     (spit (str @db-file) body))
    (println "Record added.")))
 
-(defn- db-file []
-  (io/file (System/getProperty "user.home") ".desc.clj"))
+(def ^:private db-file
+  (delay
+    (io/file (System/getProperty "user.home") ".desc.clj")))
 
 (defn- fetch-records []
-  (if (.exists (db-file))
-    (-> (slurp (db-file)) read-string vec)
+  (if (.exists @db-file)
+    (-> (slurp @db-file) read-string vec)
     []))
