@@ -11,10 +11,13 @@
 ;(fact "nonexistent .desc.clj yields vector"
 ;  @@#'desc.core/records => [])
 
-(fact "simple .desc.clj yields a vector"
-  (spit (str (io/file test-dir ".desc.clj")) "[{:a 1}]")
-  @@#'desc.core/records => [{:a 1}]
-      )
+;(fact "simple .desc.clj yields a vector"
+;  (spit (str (io/file test-dir ".desc.clj")) "[{:a 1}]")
+;  @@#'desc.core/records => [{:a 1}])
+
+(fact "desc adds a record"
+  (desc "comp" "handy!")
+  (@#'desc.core/fetch-records) => [{:name "comp" :desc "handy!"}])
 
 ; cleanup test-dir
 (.delete (io/file test-dir ".desc.clj"))
