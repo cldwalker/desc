@@ -7,13 +7,9 @@
 (.mkdir test-dir)
 (System/setProperty "user.home" (str test-dir))
 
-; TODO: reset delay
-;(fact "nonexistent .desc.clj yields vector"
-;  @@#'desc.core/records => [])
-
-;(fact "simple .desc.clj yields a vector"
-;  (spit (str (io/file test-dir ".desc.clj")) "[{:a 1}]")
-;  @@#'desc.core/records => [{:a 1}])
+(fact "nonexistent .desc.clj yields vector"
+  (@#'desc.core/check-records)
+    @records => [])
 
 (fact "desc adds a record"
   (desc "comp" "handy!")
