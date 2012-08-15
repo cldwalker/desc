@@ -3,7 +3,7 @@
             clojure.pprint
             [clojure.java.io :as io]))
 
-(declare db-file fetch-records check-records save-records)
+(declare db-file fetch-records check-records save-records update-or-add)
 
 (def records (atom nil))
 
@@ -11,9 +11,14 @@
   ([query] (println "SEARCH"))
   ([item desc]
    (check-records)
-   (swap! records conj {:name item :desc desc})
+   (swap! records update-or-add {:name item :desc desc})
    (save-records)
    (println "Record added.")))
+
+(defn- update-or-add [recs new-rec]
+  (if (some #(= (:name %) (:name new-rec)) recs)
+    (assoc recs (.indexOf (map :name recs) (:name new-rec)) new-rec)
+    (conj recs new-rec)))
 
 (defn- save-records []
   (spit

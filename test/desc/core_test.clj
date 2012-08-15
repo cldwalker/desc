@@ -15,6 +15,11 @@
   (desc "comp" "handy!")
   (@#'desc.core/fetch-records) => [{:name "comp" :desc "handy!"}])
 
+(fact "desc updates a record"
+  (desc "comp" "handy!")
+  (desc "comp" "just handy")
+  (@#'desc.core/fetch-records) => [{:name "comp" :desc "just handy"}])
+
 ; cleanup test-dir
 (.delete (io/file test-dir ".desc.clj"))
 (.delete test-dir)
