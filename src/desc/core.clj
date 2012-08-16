@@ -8,7 +8,7 @@
 (def records (atom nil))
 
 (defn desc
-  ([query] (output (search-records query)))
+  ([query] (check-records) (output (search-records query)))
   ([item desc]
    (check-records)
    (swap! records update-or-add {:name item :desc desc})
