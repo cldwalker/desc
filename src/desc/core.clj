@@ -12,13 +12,16 @@
   ([item desc]
    (check-records)
    (swap! records update-or-add {:name item :desc desc})
-   (save-records)
-   (println "Record added.")))
+   (save-records)))
 
 (defn- update-or-add [recs new-rec]
   (if (some #(= (:name %) (:name new-rec)) recs)
-    (assoc recs (.indexOf (map :name recs) (:name new-rec)) new-rec)
-    (conj recs new-rec)))
+    (do
+      (println "Updated record.")
+      (assoc recs (.indexOf (map :name recs) (:name new-rec)) new-rec))
+    (do
+      (println "Added record.")
+      (conj recs new-rec))))
 
 (defn- save-records []
   (spit

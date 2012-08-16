@@ -15,12 +15,12 @@
     @records => [])
 
 (fact "desc adds a record"
-  (desc "comp" "handy!")
+  (with-out-str (desc "comp" "handy!")) => "Added record.\n"
   (@#'desc.core/fetch-records) => [{:name "comp" :desc "handy!"}])
 
 (fact "desc updates a record"
   (desc "comp" "handy!")
-  (desc "comp" "just handy")
+  (with-out-str (desc "comp" "just handy")) => "Updated record.\n"
   (@#'desc.core/fetch-records) => [{:name "comp" :desc "just handy"}])
 
 ; after-all: cleanup test-dir
