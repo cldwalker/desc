@@ -3,16 +3,29 @@
             clojure.pprint
             [clojure.java.io :as io]))
 
-(declare db-file fetch-records check-records save-records update-or-add)
+(declare db-file fetch-records check-records save-records update-or-add output search-records)
 
 (def records (atom nil))
 
 (defn desc
-  ([query] (println "SEARCH"))
+  ([query] (output (search-records query)))
   ([item desc]
    (check-records)
    (swap! records update-or-add {:name item :desc desc})
    (save-records)))
+
+(defn- search-records [query]
+  (let [matches? (if (instance? java.util.regex.Pattern query)
+                   #(re-find query (str %))
+                   #(.contains (str %) (str query)))
+        fields [:name]]
+  (filter #(some matches? ((apply juxt fields) %)) @records)))
+
+(defn- output [recs]
+  (case (count recs)
+    1 (println (format "Name: %s\nDesc: %s" (:name (first recs)) (:desc (first recs))))
+    0 (println "No records found.")
+    (table.core/table recs)))
 
 (defn- update-or-add [recs new-rec]
   (if (some #(= (:name %) (:name new-rec)) recs)
