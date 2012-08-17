@@ -23,31 +23,36 @@
 
 (fact "desc adds a record"
   (desc-str "comp" "handy!") => "Added record.\n"
-  (@#'desc.core/fetch-records) => [{:name "comp" :desc "handy!"}])
+  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "handy!"}])
 
-(fact "desc updates a record"
+(fact "desc updates record by bare name"
   (desc "comp" "handy!")
   (desc-str "comp" "just handy") => "Updated record.\n"
-  (@#'desc.core/fetch-records) => [{:name "comp" :desc "just handy"}])
+  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "just handy"}])
+
+(fact "desc updates record by full name"
+  (desc "comp" "handy!")
+  (desc-str "clojure.core/comp" "just handy") => "Updated record.\n"
+  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "just handy"}])
 
 (fact "desc finds no records"
   (desc-str "NONE") => "No records found.\n")
 
 (fact "desc finds one record"
   (seed-search-data)
-  (desc-str "bind") => "Name: binding\nDesc: only redefines dynamic vars\n"
-  (desc-str #"bind") => "Name: binding\nDesc: only redefines dynamic vars\n")
+  (desc-str "bind") => "Name: clojure.core/binding\nDesc: only redefines dynamic vars\n"
+  (desc-str #"bind") => "Name: clojure.core/binding\nDesc: only redefines dynamic vars\n")
 
 (fact "desc finds two records"
   (seed-search-data)
   (desc-str "i") =>
 
-"+--------------+-----------------------------+
-| name         | desc                        |
-+--------------+-----------------------------+
-| binding      | only redefines dynamic vars |
-| with-out-str | capture *out*               |
-+--------------+-----------------------------+\n")
+"+---------------------------+-----------------------------+
+| name                      | desc                        |
++---------------------------+-----------------------------+
+| clojure.core/binding      | only redefines dynamic vars |
+| clojure.core/with-out-str | capture *out*               |
++---------------------------+-----------------------------+\n")
 
 ; after-all: cleanup test-dir
 (.delete (io/file test-dir ".desc.clj"))

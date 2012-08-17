@@ -1,9 +1,10 @@
 (ns desc.core
   (:require table.core
             clojure.pprint
+            clojure.string
             [clojure.java.io :as io]))
 
-(declare db-file fetch-records check-records save-records update-or-add output search-records)
+(declare db-file fetch-records check-records save-records update-or-add output search-records resolve-name)
 
 (def records (atom nil))
 
@@ -28,13 +29,20 @@
     (table.core/table recs)))
 
 (defn- update-or-add [recs new-rec]
-  (if (some #(= (:name %) (:name new-rec)) recs)
-    (do
-      (println "Updated record.")
-      (assoc recs (.indexOf (map :name recs) (:name new-rec)) new-rec))
-    (do
-      (println "Added record.")
-      (conj recs new-rec))))
+  (let [resolved-name (resolve-name (:name new-rec))
+        new-rec (assoc new-rec :name resolved-name)]
+    (if (some #(= (:name %) resolved-name) recs)
+      (do
+        (println "Updated record.")
+        (assoc recs (.indexOf (map :name recs) resolved-name) new-rec))
+      (do
+        (println "Added record.")
+        (conj recs new-rec)))))
+
+(defn resolve-name [name]
+ (if-let [sym (resolve (symbol name))]
+   (clojure.string/replace-first (str sym) #"#'" "")
+   name))
 
 (defn- save-records []
   (spit
