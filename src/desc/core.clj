@@ -39,7 +39,7 @@
         (println "Added record.")
         (conj recs new-rec)))))
 
-(defn resolve-name [name]
+(defn- resolve-name [name]
  (if-let [sym (resolve (symbol name))]
    (clojure.string/replace-first (str sym) #"#'" "")
    name))

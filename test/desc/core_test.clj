@@ -23,17 +23,17 @@
 
 (fact "desc adds a record"
   (desc-str "comp" "handy!") => "Added record.\n"
-  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "handy!"}])
+  @records => [{:name "clojure.core/comp" :desc "handy!"}])
 
 (fact "desc updates record by bare name"
   (desc "comp" "handy!")
   (desc-str "comp" "just handy") => "Updated record.\n"
-  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "just handy"}])
+  @records => [{:name "clojure.core/comp" :desc "just handy"}])
 
 (fact "desc updates record by full name"
   (desc "comp" "handy!")
   (desc-str "clojure.core/comp" "just handy") => "Updated record.\n"
-  (@#'desc.core/fetch-records) => [{:name "clojure.core/comp" :desc "just handy"}])
+  @records => [{:name "clojure.core/comp" :desc "just handy"}])
 
 (fact "desc finds no records"
   (desc-str "NONE") => "No records found.\n")
