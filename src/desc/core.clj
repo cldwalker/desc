@@ -60,3 +60,6 @@
   (if (.exists @db-file)
     (-> (slurp @db-file) read-string vec)
     []))
+
+(defn- resolve-records []
+  (vec (map #(assoc % :name (resolve-name (:name %))) @records)))

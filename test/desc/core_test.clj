@@ -21,9 +21,14 @@
   (@#'desc.core/check-records)
     @records => [])
 
-(fact "desc adds a record"
+(fact "desc adds a record with bare name"
   (desc-str "comp" "handy!") => "Added record.\n"
   @records => [{:name "clojure.core/comp" :desc "handy!"}])
+
+; TODO: fix background
+;(fact "desc adds a record with full name"
+;  (desc-str "clojure.set/join" "like SQL join for sets") => "Added record.\n"
+;  @records => [{:name "clojure.set/join" :desc "like SQL join for sets"}])
 
 (fact "desc updates record by bare name"
   (desc "comp" "handy!")
