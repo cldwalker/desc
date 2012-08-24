@@ -1,4 +1,4 @@
-(defproject desc "0.1.0-SNAPSHOT"
+(defproject desc "0.1.0"
   :description "Describe what you want about clojure."
   :url "http://github.com/cldwalker/desc"
   :license {:name "The MIT LICENSE"
