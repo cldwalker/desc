@@ -3,7 +3,7 @@
 This repl tool enables you to take structured notes about clojure functions. Scope may change to
 other data types or to more function-related features, whatever's most useful.
 
-[![Build Status](https://secure.travis-ci.org/cldwalker/desc.png?branch=master)](http://travis-ci.org/cldwalker/desc)
+[![Build Status](https://travis-ci.org/cldwalker/desc.png?branch=master)](https://travis-ci.org/cldwalker/desc)
 
 ## Usage
 
