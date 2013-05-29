@@ -5,6 +5,14 @@ other data types or to more function-related features, whatever's most useful.
 
 [![Build Status](https://travis-ci.org/cldwalker/desc.png?branch=master)](https://travis-ci.org/cldwalker/desc)
 
+## Install
+
+```
+$ lein install
+```
+
+I can release this as a clojar if anyone asks.
+
 ## Usage
 
 In your repl:
