@@ -7,5 +7,5 @@
                  [table "0.3.2"]]
   :profiles {:dev {:dependencies [[midje "1.4.0"]]
                    :plugins  [[lein-midje "2.0.0-SNAPSHOT"]]}
-             :1.5 {:dependencies [[org.clojure/clojure "1.5.0-RC1"]]}}
+             :1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}}
   :aliases {"all" ["with-profile" "dev:dev,1.5"]})
